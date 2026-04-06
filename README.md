@@ -1,40 +1,40 @@
 # task-tracker-skill
 
-`task-tracker` is a skill for running project work from persistent task artifacts instead of chat context.
+`task-tracker` — это скилл для ведения проектной работы из постоянных артефактов задач, а не из контекста чата.
 
-It helps an agent:
-- start new work from a feature-level artifact
-- decompose work into executable tasks
-- pick the next task based on dependencies and status
-- resume current work from saved state
-- move tasks through execution, testing, and retro
-- surface tasks that can start in parallel
+Он помогает агенту:
+- начинать новую работу от артефакта уровня фичи
+- декомпозировать работу в исполнимые задачи
+- выбирать следующую задачу по зависимостям и статусу
+- восстанавливать текущую работу из сохраненного состояния
+- проводить задачи через исполнение, тестирование и ретро
+- показывать задачи, которые можно запускать параллельно
 
-## When To Use It
+## Когда использовать
 
-Use `task-tracker` when your project already keeps delivery state in files and you want the agent to work from that state reliably across long threads, pauses, and handoffs.
+Используйте `task-tracker`, если ваш проект уже хранит состояние поставки в файлах и вы хотите, чтобы агент надежно работал от этого состояния в длинных тредах, после пауз и при передаче работы.
 
-This skill is a good fit for:
-- feature work with multiple tasks
-- resumable execution
-- policy-driven delivery flows
-- multi-agent task execution
+Этот скилл подходит для:
+- фич с несколькими задачами
+- возобновляемого исполнения
+- процессов разработки, управляемых правилами
+- многоагентного выполнения задач
 
-## Commands
+## Команды
 
-### New work
+### Новая работа
 
 - `новая задача`
 - `new task`
 
-Starts from a feature dossier, prepares a preview, applies the simple-vs-feature gate, and asks for confirmation before creating artifacts.
+Начинает с досье фичи, готовит превью, применяет развилку simple-vs-feature и запрашивает подтверждение перед созданием артефактов.
 
-Preview replies:
+Ответы на превью:
 - `делай`
 - `делай, но поправь: ...`
 - `отмена`
 
-### Execute a task
+### Выполнение задачи
 
 - `сделай задачу N`
 - `сделай PREFIX-N`
@@ -42,61 +42,60 @@ Preview replies:
 - `го след задачу`
 - `го след таску`
 
-Resolves the requested task or finds the next executable one from project state.
+Находит указанную задачу или выбирает следующую исполнимую задачу из состояния проекта.
 
-### Resume work
+### Возобновление работы
 
 - `текущая задача`
 - `current task`
 - `продолжай задачу`
 - `continue task`
 
-Restores execution context from task artifacts, not from the chat.
+Восстанавливает контекст выполнения из артефактов задачи, а не из чата.
 
-### Retro inbox
+### Ретро-инбокс
 
 - `разбери ретро-инбокс`
 - `review retro inbox`
 
-Processes retro findings and routes them into project patterns, follow-up tasks, upstream candidates, defers, or rejects.
+Обрабатывает выводы из ретро и раскладывает их в проектные паттерны, follow-up задачи, upstream-кандидаты, отложенные или отклоненные пункты.
 
-### Help
+### Помощь
 
 - `task tracker help`
 
-## How It Works
+## Как это работает
 
-`task-tracker` reads the project policy layer first, then uses it to decide:
-- which artifacts to create
-- how to interpret task status
-- how to pick the next task
-- when testing starts
-- when retro is required
-- which tasks can run in parallel
+Сначала `task-tracker` читает слой правил проекта, а затем использует его, чтобы определить:
+- какие артефакты создавать
+- как интерпретировать статусы задач
+- как выбирать следующую задачу
+- когда начинать тестирование
+- когда требуется ретро
+- какие задачи можно выполнять параллельно
 
-For new work, it shows a preview first and waits for confirmation.
+Для новой работы он сначала показывает превью и ждет подтверждения.
 
-For execution and resume, it recovers state from project artifacts and updates that state as work progresses.
+Для выполнения и возобновления он восстанавливает состояние из проектных артефактов и обновляет это состояние по ходу работы.
 
-## Project Requirements
+## Требования к проекту
 
-`task-tracker` expects the target project to already have:
-- a machine-readable project config
-- a project policy layer
-- feature and task artifacts with persistent state
-- templates or conventions for delivery artifacts
+`task-tracker` ожидает, что в целевом проекте уже есть:
+- машиночитаемый конфиг проекта
+- слой проектных правил
+- артефакты фич и задач с постоянным состоянием
+- шаблоны или договоренности для артефактов поставки
 
-The exact contract is defined in [`SKILL.md`](./SKILL.md).
+Точный контракт описан в [`SKILL.md`](./SKILL.md).
 
-## Companion Skill
+## Сопутствующий скилл
 
-If you also need to set up or maintain the project-side delivery structure, use [`project-tracker-skill`](https://github.com/ai-meatbags/project-tracker-skill.git).
+Если вам также нужно настраивать или поддерживать проектную структуру поставки, используйте [`project-tracker-skill`](https://github.com/ai-meatbags/project-tracker-skill.git).
 
-Typical split:
-- `project-tracker-skill` sets up and maintains the project delivery layer
-- `task-tracker-skill` runs day-to-day task execution on top of that layer
+Типичное разделение:
+- `project-tracker-skill` настраивает и поддерживает слой поставки проекта
+- `task-tracker-skill` ведет повседневное выполнение задач поверх этой структуры
 
-## Repository Contents
+## Содержимое репозитория
 
-- `SKILL.md` — skill definition and operating rules
-
+- `SKILL.md` — описание скилла и правила работы
