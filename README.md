@@ -38,6 +38,17 @@ It does not invent your delivery process, folder layout, or artifact semantics. 
 
 This makes the skill flexible, but it also means the project must already expose a compatible process contract.
 
+## Companion Skill
+
+If you also need help setting up the project-side delivery contract, use [`project-tracker-skill`](https://github.com/ai-meatbags/project-tracker-skill.git).
+
+The intended split is:
+
+- `project-tracker-skill` helps establish and maintain the project structure, policy layer, and delivery artifacts
+- `task-tracker-skill` operates on top of that structure to create, execute, resume, test, and close tasks
+
+That link is product-level guidance, not a monorepo dependency. This repository remains standalone.
+
 ## Best Fit
 
 This skill is useful when you want:
