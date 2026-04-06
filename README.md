@@ -1,93 +1,102 @@
 # task-tracker-skill
 
-Policy-driven task orchestration for coding agents.
+`task-tracker` is a skill for running project work from persistent task artifacts instead of chat context.
 
-`task-tracker` helps an agent move work forward from persistent project artifacts instead of relying on chat history. It is built for teams that want delivery to survive context loss, handoffs, retries, and long-running feature work.
+It helps an agent:
+- start new work from a feature-level artifact
+- decompose work into executable tasks
+- pick the next task based on dependencies and status
+- resume current work from saved state
+- move tasks through execution, testing, and retro
+- surface tasks that can start in parallel
 
-## What It Does
+## When To Use It
 
-- Starts new work from a feature-level artifact instead of jumping straight into code.
-- Decomposes scoped work into executable tasks with explicit state.
-- Resumes the current task from files, not from conversation memory.
-- Enforces execution, testing, and retro gates through project-owned policy.
-- Surfaces parallel-start work when tasks are independent and safe to split.
+Use `task-tracker` when your project already keeps delivery state in files and you want the agent to work from that state reliably across long threads, pauses, and handoffs.
 
-## Why It Exists
+This skill is a good fit for:
+- feature work with multiple tasks
+- resumable execution
+- policy-driven delivery flows
+- multi-agent task execution
 
-Most agent workflows break down once the conversation gets long, another person takes over, or the implementation pauses for a day. `task-tracker` treats the project itself as the source of truth:
+## Commands
 
-- plans live in artifacts
-- execution state lives in artifacts
-- testing and close-out live in artifacts
-- the agent reads those artifacts before acting
+### New work
 
-That makes task execution more repeatable and easier to audit.
+- `новая задача`
+- `new task`
 
-## Product Model
+Starts from a feature dossier, prepares a preview, applies the simple-vs-feature gate, and asks for confirmation before creating artifacts.
 
-`task-tracker` is intentionally not a project bootstrapper.
+Preview replies:
+- `делай`
+- `делай, но поправь: ...`
+- `отмена`
 
-It does not invent your delivery process, folder layout, or artifact semantics. Instead, it reads a project-defined policy layer and uses that contract to decide:
+### Execute a task
 
-- what artifacts exist
-- how tasks are selected
+- `сделай задачу N`
+- `сделай PREFIX-N`
+- `сделай следующую задачу`
+- `го след задачу`
+- `го след таску`
+
+Resolves the requested task or finds the next executable one from project state.
+
+### Resume work
+
+- `текущая задача`
+- `current task`
+- `продолжай задачу`
+- `continue task`
+
+Restores execution context from task artifacts, not from the chat.
+
+### Retro inbox
+
+- `разбери ретро-инбокс`
+- `review retro inbox`
+
+Processes retro findings and routes them into project patterns, follow-up tasks, upstream candidates, defers, or rejects.
+
+### Help
+
+- `task tracker help`
+
+## How It Works
+
+`task-tracker` reads the project policy layer first, then uses it to decide:
+- which artifacts to create
+- how to interpret task status
+- how to pick the next task
 - when testing starts
 - when retro is required
-- what “done” means
-- which work can run in parallel
+- which tasks can run in parallel
 
-This makes the skill flexible, but it also means the project must already expose a compatible process contract.
+For new work, it shows a preview first and waits for confirmation.
+
+For execution and resume, it recovers state from project artifacts and updates that state as work progresses.
+
+## Project Requirements
+
+`task-tracker` expects the target project to already have:
+- a machine-readable project config
+- a project policy layer
+- feature and task artifacts with persistent state
+- templates or conventions for delivery artifacts
+
+The exact contract is defined in [`SKILL.md`](./SKILL.md).
 
 ## Companion Skill
 
-If you also need help setting up the project-side delivery contract, use [`project-tracker-skill`](https://github.com/ai-meatbags/project-tracker-skill.git).
+If you also need to set up or maintain the project-side delivery structure, use [`project-tracker-skill`](https://github.com/ai-meatbags/project-tracker-skill.git).
 
-The intended split is:
-
-- `project-tracker-skill` helps establish and maintain the project structure, policy layer, and delivery artifacts
-- `task-tracker-skill` operates on top of that structure to create, execute, resume, test, and close tasks
-
-That link is product-level guidance, not a monorepo dependency. This repository remains standalone.
-
-## Best Fit
-
-This skill is useful when you want:
-
-- longer-lived feature work with resumable state
-- explicit task artifacts instead of ad hoc chat instructions
-- consistent testing and close-out behavior
-- multi-agent execution with clear task boundaries
-- a delivery workflow that is owned by the project, not hardcoded into the agent
-
-It is a poor fit for:
-
-- tiny one-off edits with no artifact model
-- repos that do not maintain structured task state
-- teams expecting a zero-config task manager
-
-## Current Contract
-
-The current open-source version expects the target project to already expose:
-
-- a machine-readable project config
-- a process policy layer
-- task and feature artifacts with persistent state
-- templates or conventions for runtime delivery artifacts
-
-If that layer is missing or invalid, `task-tracker` should stop rather than improvising process rules.
+Typical split:
+- `project-tracker-skill` sets up and maintains the project delivery layer
+- `task-tracker-skill` runs day-to-day task execution on top of that layer
 
 ## Repository Contents
 
-- `SKILL.md` — the operating contract for the skill
+- `SKILL.md` — skill definition and operating rules
 
-## Important Note
-
-This repository is open source and standalone, but the skill is not fully generic yet.
-
-The current `SKILL.md` still targets a specific policy-driven artifact format. So the honest product position is:
-
-- portable repository
-- reusable skill
-- not plug-and-play for arbitrary repos without a compatible project contract
-
-If you want broader adoption, the next real product step is not another README pass. It is extracting the policy contract into a more neutral public spec or adding adapters for multiple project layouts.
