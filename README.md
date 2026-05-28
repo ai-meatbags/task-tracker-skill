@@ -1,13 +1,13 @@
 # task-tracker-skill
 
 > [!IMPORTANT]
-> Статус: `obsoleted`. Репозиторий сохранен как архив старого project/task tracker flow.
+> Статус: `obsoleted`. Репозиторий сохранен как архив старого потока project/task tracker.
 > Актуальная архитектурная поверхность:
-> - [ai-meatbags/arch-rules](https://github.com/ai-meatbags/arch-rules) — baseline архитектурных правил.
+> - [ai-meatbags/arch-rules](https://github.com/ai-meatbags/arch-rules) — базовые архитектурные правила.
 > - [VanDalkvist/arch-rules-skills](https://github.com/VanDalkvist/arch-rules-skills) — skills для применения архитектурных правил в планировании и review.
-> - [VanDalkvist/arch-improvement-skills](https://github.com/VanDalkvist/arch-improvement-skills) — skills для arch loop / review-fix-verify cycles.
+> - [VanDalkvist/arch-improvement-skills](https://github.com/VanDalkvist/arch-improvement-skills) — skills для arch loop: обзор, исправление, проверка.
 >
-> Поддержка этого репозитория прекращена. Новые process changes должны идти через репозитории выше.
+> Поддержка этого репозитория прекращена. Новые изменения процесса должны идти через репозитории выше.
 
 `task-tracker` — это скилл для ведения проектной работы из постоянных артефактов задач, а не из контекста чата.
 
