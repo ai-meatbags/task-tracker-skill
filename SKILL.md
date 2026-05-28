@@ -1,6 +1,9 @@
 ---
 name: task-tracker
 description: >-
+  OBSOLETED. This legacy skill repository is kept as an archive; use
+  ai-meatbags/arch-rules, VanDalkvist/arch-rules-skills, and
+  VanDalkvist/arch-improvement-skills for new architecture-rule and arch-loop work.
   Use when user asks to execute or prepare project tasks: "новая задача", "new task", "сделай задачу N",
   "сделай PREFIX-N", "сделай следующую задачу", "го след задачу", "го след таску",
   "текущая задача", "current task", "продолжай задачу", "continue task",
@@ -9,6 +12,15 @@ description: >-
 ---
 
 # Task Tracker
+
+> [!IMPORTANT]
+> Статус: `obsoleted`. Репозиторий сохранен как архив старого project/task tracker flow.
+> Актуальная архитектурная поверхность:
+> - [ai-meatbags/arch-rules](https://github.com/ai-meatbags/arch-rules) — baseline архитектурных правил.
+> - [VanDalkvist/arch-rules-skills](https://github.com/VanDalkvist/arch-rules-skills) — skills для применения архитектурных правил в планировании и review.
+> - [VanDalkvist/arch-improvement-skills](https://github.com/VanDalkvist/arch-improvement-skills) — skills для arch loop / review-fix-verify cycles.
+>
+> Поддержка этого репозитория прекращена. Новые process changes должны идти через репозитории выше.
 
 ## Purpose
 
